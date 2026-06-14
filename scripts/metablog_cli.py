@@ -35,7 +35,7 @@ PROJECT_ROOT = os.path.dirname(_SCRIPT_DIR) if os.path.basename(_SCRIPT_DIR) == 
 load_dotenv(os.path.join(PROJECT_ROOT, ".env"))
 
 KEYRING_SERVICE = "dotblogs"
-API_URL         = os.environ.get("BLOG_API_URL", "https://dotblogs.com.tw/Api/MetaWeblog")
+API_URL         = os.environ.get("BLOG_API_URL", "")
 BLOG_NAME       = os.environ.get("BLOG_NAME", "")
 BLOG_URL        = os.environ.get("BLOG_URL", "")
 

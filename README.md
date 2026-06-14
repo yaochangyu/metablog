@@ -1,4 +1,4 @@
-# metablog-cli
+# metablog
 
 透過 MetaWeblog XML-RPC API 管理部落格文章的命令列工具，支援任何實作 MetaWeblog 標準的平台（dotblogs、WordPress 等）。
 
@@ -28,7 +28,7 @@ uv sync
 cp .env.example .env
 ```
 
-填入以下欄位（不要填密碼）：
+填入以下欄位（不要填密碼，所有欄位皆為必填）：
 
 ```env
 BLOG_USER=your_email@example.com
@@ -38,6 +38,8 @@ BLOG_API_URL=https://dotblogs.com.tw/Api/MetaWeblog
 ```
 
 > `BLOG_PASSWORD` **不要**放在 `.env`，請用下方的 Keychain 方式設定。
+
+dotblogs 以外的平台只需更換 `BLOG_API_URL`。
 
 ### 2. 將密碼存入系統 Keychain（只需一次）
 
