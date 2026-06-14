@@ -288,6 +288,14 @@ def cmd_publish(args, username: str, password: str):
     proxy = xmlrpc.client.ServerProxy(API_URL)
 
     if info["post_id"]:
+        blogid = proxy.blogger.getUsersBlogs("", username, password)[0]["blogid"]
+        valid_cats = {c["categoryid"] for c in proxy.metaWeblog.getCategories(blogid, username, password)}
+        filtered = [c for c in (info["categories"] or []) if c in valid_cats]
+        skipped  = [c for c in (info["categories"] or []) if c not in valid_cats]
+        if skipped:
+            print(f"⚠️  分類不存在，已略過：{skipped}")
+        if filtered != info["categories"]:
+            post_struct["categories"] = filtered
         print(f"動作   ：更新既有文章 (postId={info['post_id']})")
         ok = proxy.metaWeblog.editPost(info["post_id"], username, password, post_struct, info["publish"])
         print(f"\n✅ 更新成功！(ok={ok})")
