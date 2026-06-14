@@ -1,12 +1,12 @@
-# publish-blog
+# metablog-cli
 
-用 MetaWebLog XML-RPC API 操作 dotblogs.com.tw 的命令列工具。
+透過 MetaWeblog XML-RPC API 管理部落格文章的命令列工具，支援任何實作 MetaWeblog 標準的平台（dotblogs、WordPress 等）。
 
 ## 功能
 
-- `publish`：將 Markdown 文章發布或更新到 dotblogs（草稿或公開）
+- `publish`：將 Markdown 文章發布或更新到部落格（草稿或公開）
 - `list`：列出最新文章
-- `get`：從 dotblogs 下載文章，轉換為 Markdown 存檔
+- `get`：從部落格下載文章，轉換為 Markdown 存檔
 
 ## 環境需求
 
@@ -15,8 +15,8 @@
 ## 安裝
 
 ```bash
-git clone <repo>
-cd publish-blog
+git clone https://github.com/yaochangyu/metablog.git
+cd metablog
 uv sync
 ```
 
@@ -24,39 +24,46 @@ uv sync
 
 ### 1. 建立 `.env`
 
-複製範本後填入部落格資訊：
-
 ```bash
 cp .env.example .env
 ```
 
-`.env` 內容：
+填入以下欄位（不要填密碼）：
 
 ```env
 BLOG_USER=your_email@example.com
 BLOG_NAME=你的部落格名稱
 BLOG_URL=your_blog_subdomain
+BLOG_API_URL=https://dotblogs.com.tw/Api/MetaWeblog
 ```
 
-> `BLOG_PASSWORD` **不要**放在 `.env`，請用下方的 keychain 方式設定。
+> `BLOG_PASSWORD` **不要**放在 `.env`，請用下方的 Keychain 方式設定。
 
-### 2. 將密碼存入系統 Keychain
+### 2. 將密碼存入系統 Keychain（只需一次）
 
-密碼透過作業系統的加密鑰匙圈（macOS Keychain / Windows Credential Manager / Linux Secret Service）儲存，不落地於任何檔案：
+密碼存於 OS 加密鑰匙圈（macOS Keychain / Windows Credential Manager / Linux Secret Service），不落地於任何檔案：
 
 ```bash
 uv run python3 -c "import keyring; keyring.set_password('dotblogs', 'BLOG_PASSWORD', '你的密碼')"
 ```
 
-執行一次即可，之後腳本會自動從 keychain 讀取。
-
-若需要驗證是否存入成功：
+驗證是否存入成功：
 
 ```bash
 uv run python3 -c "import keyring; print(keyring.get_password('dotblogs', 'BLOG_PASSWORD'))"
 ```
 
-若需要更換密碼，重新執行 `set_password` 覆蓋即可。
+### 3. 安裝為 Claude Code Skill（選用）
+
+在 Claude Code 設定中新增此 skill，Claude 就能直接幫你發文：
+
+```json
+{
+  "skills": [
+    { "path": "/path/to/metablog" }
+  ]
+}
+```
 
 ## 使用方式
 
@@ -86,22 +93,22 @@ uv run scripts/metablog_cli.py get --ids <postId> [postId ...]
 uv run scripts/metablog_cli.py -o /path/to/dir get --latest 5
 ```
 
-下載的 `.md` 檔會自動加上 frontmatter，可直接用 `publish` 子命令更新回去。
+下載的 `.md` 檔會自動加上 frontmatter，可直接用 `publish` 更新回去。
 
 ### 發布文章
 
 ```bash
-# 使用預設路徑（output/blog.md）
-uv run scripts/metablog_cli.py publish
-
 # 指定檔案
 uv run scripts/metablog_cli.py publish /path/to/post.md
+
+# 使用預設路徑（output/blog.md）
+uv run scripts/metablog_cli.py publish
 
 # 指定輸出目錄下的 blog.md
 uv run scripts/metablog_cli.py -o /path/to/dir publish
 ```
 
-- **無 frontmatter**：自動產生並寫回 `.md` 檔，上傳為草稿
+- **無 frontmatter**：自動產生並寫回 `.md`，上傳為草稿
 - **有 frontmatter、postId 為空**：新增文章，`postId` 自動回填
 - **有 frontmatter、postId 有值**：更新既有文章
 

@@ -7,10 +7,10 @@
   BLOG_PASSWORD  登入密碼（必填）
 
 用法：
-  publish_blog.py publish [file.md]                   發布/更新文章（預設 blog.md）
-  publish_blog.py list [--size N] [--all]             列出文章
-  publish_blog.py get <postId> [postId ...]           下載文章轉存為 .md
-  publish_blog.py get --latest N                      下載最新 N 篇
+  metablog_cli.py publish [file.md]                   發布/更新文章（預設 blog.md）
+  metablog_cli.py list [--size N] [--all]             列出文章
+  metablog_cli.py get --latest N                      下載最新 N 篇
+  metablog_cli.py get --ids <postId> [postId ...]     下載指定文章
 
 frontmatter 欄位（publish 時若不存在會自動產生並寫回 .md）：
   title / abstract / keywords / categories / weblogName
@@ -28,7 +28,11 @@ import keyring
 from dotenv import load_dotenv
 from markdownify import markdownify as html2md
 
-load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
+_SCRIPT_DIR  = os.path.dirname(os.path.abspath(__file__))
+# scripts/ 在專案根目錄下一層，往上一層才是根目錄
+PROJECT_ROOT = os.path.dirname(_SCRIPT_DIR) if os.path.basename(_SCRIPT_DIR) == "scripts" else _SCRIPT_DIR
+
+load_dotenv(os.path.join(PROJECT_ROOT, ".env"))
 
 KEYRING_SERVICE = "dotblogs"
 API_URL         = os.environ.get("BLOG_API_URL", "https://dotblogs.com.tw/Api/MetaWeblog")
@@ -262,7 +266,7 @@ def print_posts(posts: list, fetch_all: bool):
 def resolve_output_dir(output_dir: str) -> str:
     if os.path.isabs(output_dir):
         return output_dir
-    return os.path.join(os.path.dirname(os.path.abspath(__file__)), output_dir)
+    return os.path.join(PROJECT_ROOT, output_dir)
 
 
 def cmd_publish(args, username: str, password: str):
