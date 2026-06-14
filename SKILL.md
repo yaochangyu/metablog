@@ -1,6 +1,6 @@
 ---
 name: metablog-cli
-description: 透過 MetaWeblog XML-RPC API 管理部落格文章。當使用者提到發文、更新文章、列出文章、下載部落格內容、dotblogs、MetaWeblog、或想把 Markdown 文章推上部落格時，一定要使用這個 skill。即使使用者只說「幫我發這篇」或「看一下我的 blog」或 發佈點部落文章，也應套用此 skill。
+description: 透過 MetaWeblog XML-RPC API 管理點部落（dotblogs.com.tw）文章，也支援 WordPress 等任何 MetaWeblog 相容平台。當使用者提到點部落、dotblogs、發文、更新文章、列出文章、下載部落格、MetaWeblog，或想把 Markdown 推上部落格時，一定要使用這個 skill。即使只說「幫我發這篇」、「看一下我的 blog」、「發到點部落」，也應套用此 skill。
 ---
 
 # metablog-cli
