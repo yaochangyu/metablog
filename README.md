@@ -57,15 +57,15 @@ uv run python3 -c "import keyring; print(keyring.get_password('dotblogs', 'BLOG_
 
 ### 3. 安裝為 Claude Code Skill（選用）
 
-在 Claude Code 設定中新增此 skill，Claude 就能直接幫你發文：
+將 repo clone 到 Claude Code 的 skills 目錄，Claude 就能直接幫你發文：
 
-```json
-{
-  "skills": [
-    { "path": "/path/to/metablog" }
-  ]
-}
+```bash
+git clone https://github.com/yaochangyu/metablog-cli.git ~/.claude/skills/metablog-cli
 ```
+
+重新啟動 Claude Code 後，skill 即自動載入，無需修改任何設定檔。
+
+驗證是否載入成功：在 Claude Code 輸入 `/skills`，確認列表中出現 `metablog-cli`。
 
 ## 使用方式
 
