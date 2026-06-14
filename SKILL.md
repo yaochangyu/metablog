@@ -58,23 +58,23 @@ uv run python3 -c "import keyring; keyring.set_password('dotblogs', 'BLOG_PASSWO
 
 ```bash
 # 最新 10 筆（預設）
-uv run metablog_cli.py list
+uv run ${CLAUDE_SKILL_DIR}/scripts/metablog_cli.py list
 
 # 指定筆數
-uv run metablog_cli.py list --size 20
+uv run ${CLAUDE_SKILL_DIR}/scripts/metablog_cli.py list --size 20
 
 # 全部
-uv run metablog_cli.py list --all
+uv run ${CLAUDE_SKILL_DIR}/scripts/metablog_cli.py list --all
 ```
 
 ### 下載文章為 Markdown
 
 ```bash
 # 最新 N 篇
-uv run metablog_cli.py get --latest 2
+uv run ${CLAUDE_SKILL_DIR}/scripts/metablog_cli.py get --latest 2
 
 # 指定 postId
-uv run metablog_cli.py get --ids <postId> [postId ...]
+uv run ${CLAUDE_SKILL_DIR}/scripts/metablog_cli.py get --ids <postId> [postId ...]
 ```
 
 下載的 `.md` 會存到 `output/`，並自動補上 frontmatter。
@@ -83,10 +83,10 @@ uv run metablog_cli.py get --ids <postId> [postId ...]
 
 ```bash
 # 發布指定 .md 檔
-uv run metablog_cli.py publish /path/to/post.md
+uv run ${CLAUDE_SKILL_DIR}/scripts/metablog_cli.py publish /path/to/post.md
 
 # 使用預設路徑（output/blog.md）
-uv run metablog_cli.py publish
+uv run ${CLAUDE_SKILL_DIR}/scripts/metablog_cli.py publish
 ```
 
 - 無 frontmatter → 自動產生並寫回 `.md`，上傳為草稿
@@ -96,8 +96,8 @@ uv run metablog_cli.py publish
 ### 指定輸出目錄
 
 ```bash
-uv run metablog_cli.py -o /path/to/dir publish
-uv run metablog_cli.py -o /path/to/dir get --latest 5
+uv run ${CLAUDE_SKILL_DIR}/scripts/metablog_cli.py -o /path/to/dir publish
+uv run ${CLAUDE_SKILL_DIR}/scripts/metablog_cli.py -o /path/to/dir get --latest 5
 ```
 
 ## Frontmatter 欄位
