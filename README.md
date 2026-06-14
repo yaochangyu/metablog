@@ -15,7 +15,7 @@
 ## 安裝
 
 ```bash
-git clone https://github.com/yaochangyu/metablog.git
+git clone https://github.com/yaochangyu/metablog-cli.git
 cd metablog
 uv sync
 ```
