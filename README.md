@@ -64,26 +64,26 @@ uv run python3 -c "import keyring; print(keyring.get_password('dotblogs', 'BLOG_
 
 ```bash
 # 最新 10 筆（預設）
-uv run metablog.py list
+uv run metablog_cli.py list
 
 # 指定筆數
-uv run metablog.py list --size 20
+uv run metablog_cli.py list --size 20
 
 # 全部
-uv run metablog.py list --all
+uv run metablog_cli.py list --all
 ```
 
 ### 下載文章為 Markdown
 
 ```bash
 # 最新 2 篇
-uv run metablog.py get --latest 2
+uv run metablog_cli.py get --latest 2
 
 # 指定 postId（可多個）
-uv run metablog.py get --ids <postId> [postId ...]
+uv run metablog_cli.py get --ids <postId> [postId ...]
 
 # 指定輸出目錄（預設 output/）
-uv run metablog.py -o /path/to/dir get --latest 5
+uv run metablog_cli.py -o /path/to/dir get --latest 5
 ```
 
 下載的 `.md` 檔會自動加上 frontmatter，可直接用 `publish` 子命令更新回去。
@@ -92,13 +92,13 @@ uv run metablog.py -o /path/to/dir get --latest 5
 
 ```bash
 # 使用預設路徑（output/blog.md）
-uv run metablog.py publish
+uv run metablog_cli.py publish
 
 # 指定檔案
-uv run metablog.py publish /path/to/post.md
+uv run metablog_cli.py publish /path/to/post.md
 
 # 指定輸出目錄下的 blog.md
-uv run metablog.py -o /path/to/dir publish
+uv run metablog_cli.py -o /path/to/dir publish
 ```
 
 - **無 frontmatter**：自動產生並寫回 `.md` 檔，上傳為草稿
